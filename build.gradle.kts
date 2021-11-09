@@ -14,4 +14,5 @@ dependencies {
     implementation(kotlin("stdlib"))
 
     implementation("net.dv8tion:JDA:4.3.0_277")
+    implementation("org.yaml:snakeyaml:1.12")
 }
