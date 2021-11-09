@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 import java.lang.Exception
 
 class CommandHandler {
-    val logger = LoggerFactory.getLogger(CommandHandler::class.java)
+    private val logger = LoggerFactory.getLogger(CommandHandler::class.java)
     private val commandList = HashSet<CommandBase>()
 
     fun registerCommands(commands: Set<CommandBase>) {
