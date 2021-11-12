@@ -2,7 +2,7 @@ package com.github.raink1208.channelarchiver.commands
 
 import com.github.raink1208.channelarchiver.command.CommandBase
 import com.github.raink1208.channelarchiver.exporting.ChannelExporter
-import com.github.raink1208.channelarchiver.exporting.formats.CSVFormat
+import com.github.raink1208.channelarchiver.exporting.formats.TextFormat
 import com.github.raink1208.channelarchiver.exporting.formats.ExportFormat
 import com.github.raink1208.channelarchiver.exporting.formats.JSONFormat
 import net.dv8tion.jda.api.entities.Message
@@ -13,9 +13,9 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData
 import net.dv8tion.jda.api.interactions.commands.build.OptionData
 
 object ChannelArchiveCommand: CommandBase {
-    override val commandData: CommandData = CommandData("archive", "チャンネルを外部ファイルに出力します (export type = [0 = csv, 1 = json])")
+    override val commandData: CommandData = CommandData("archive", "チャンネルを外部ファイルに出力します (export type = [0 = txt, 1 = json])")
         .addOption(OptionType.CHANNEL, "channel", "アーカイブするチャンネル", false)
-        .addOptions(OptionData(OptionType.INTEGER, "export_type", "出力タイプ(default = 0[csv])", false).addChoice("CSV", 0).addChoice("JSON", 1))
+        .addOptions(OptionData(OptionType.INTEGER, "export_type", "出力タイプ(default = 0[txt])", false).addChoice("TXT", 0).addChoice("JSON", 1))
 
     override fun execute(event: SlashCommandEvent) {
         val channel = event.getOption("channel")?.asGuildChannel ?: event.textChannel
@@ -66,7 +66,7 @@ object ChannelArchiveCommand: CommandBase {
 
     private fun getFormat(exportType: Int): ExportFormat? {
         return when (exportType) {
-            ChannelExporter.CSV -> CSVFormat()
+            ChannelExporter.TXT -> TextFormat()
             ChannelExporter.JSON -> JSONFormat()
             else -> null
         }

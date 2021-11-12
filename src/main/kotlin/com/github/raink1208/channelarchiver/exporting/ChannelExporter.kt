@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.TextChannel
 
 class ChannelExporter(private val channel: TextChannel, private val format: ExportFormat) {
     companion object {
-        const val CSV = 0
+        const val TXT = 0
         const val JSON = 1
     }
 

@@ -4,16 +4,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageChannel
+import net.dv8tion.jda.api.entities.MessageHistory
 import java.io.File
 
-class CSVFormat: ExportFormat {
-    override val extension: String = ".csv"
+class TextFormat: ExportFormat {
+    override val extension: String = ".txt"
     override suspend fun execute(channel: MessageChannel): File {
         val file = createLogFile()
+        val history = MessageHistory(channel)
+
+        while (true) {
+            val retrieve = history.retrievePast(100).complete()
+            if (retrieve.isEmpty()) break
+        }
+
+        val messages = history.retrievedHistory.reversed()
 
         withContext(Dispatchers.IO) {
             file.writer().use {
-                for (message in channel.getHistoryBefore(channel.latestMessageId, 100).complete().retrievedHistory) {
+                for (message in messages) {
                     it.write(getRow(message))
                     it.write("\n")
                 }
@@ -28,8 +37,8 @@ class CSVFormat: ExportFormat {
         val author = message.author.name
         val content = message.contentRaw
 
-        content.replace("\n", "\\n")
-        content.replace(",", ".")
-        return "$author,$content"
+        val replaced = content.replace("\n", "  ")
+
+        return "$author: $replaced"
     }
 }
