@@ -19,17 +19,6 @@ class CommandHandler {
         commandList.add(command)
     }
 
-    fun unregisterCommands(commands: Set<CommandBase>) {
-        for (command in commands) {
-            unregisterCommand(command)
-        }
-    }
-
-    fun unregisterCommand(command: CommandBase) {
-        logger.info("command: ${command.commandData.name}を登録解除した")
-        commandList.remove(command)
-    }
-
     fun findCommand(command: String): CommandBase? {
         return commandList.find { it.commandData.name == command }
     }
