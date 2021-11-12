@@ -12,15 +12,14 @@ class TextFormat: ExportFormat {
     override suspend fun execute(channel: MessageChannel): File {
         val file = createLogFile()
         val history = MessageHistory(channel)
-
-        while (true) {
-            val retrieve = history.retrievePast(100).complete()
-            if (retrieve.isEmpty()) break
-        }
-
-        val messages = history.retrievedHistory.reversed()
-
         withContext(Dispatchers.IO) {
+            while (true) {
+                val retrieve = history.retrievePast(100).complete()
+                if (retrieve.isEmpty()) break
+            }
+
+            val messages = history.retrievedHistory.reversed()
+
             file.writer().use {
                 for (message in messages) {
                     it.write(getRow(message))
