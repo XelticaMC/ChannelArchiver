@@ -12,7 +12,12 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
     implementation("net.dv8tion:JDA:4.3.0_277")
     implementation("org.yaml:snakeyaml:1.12")
+
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
 }
