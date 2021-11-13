@@ -1,5 +1,12 @@
 plugins {
     kotlin("jvm") version "1.5.0"
+    application
+}
+
+val main = "com.github.raink1208.channelarchiver.MainKt"
+
+application {
+    mainClass.set(main)
 }
 
 group = "com.github.raink1208"
@@ -21,4 +28,24 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
+}
+
+
+
+tasks {
+    jar {
+        archiveFileName.set("ChannelArchiver.jar")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        manifest {
+            attributes("Main-Class" to main)
+        }
+        from(configurations.runtimeClasspath.get()
+            .filter { !it.name.endsWith("pom") }
+            .onEach { println("add from dependencies:" + it.name) }
+            .map { if (it.isDirectory) it else zipTree(it) }
+        )
+        val sourcesMain = sourceSets.main.get()
+        sourcesMain.allSource.forEach { println("add form sources: "+it.name) }
+        from(sourcesMain.output)
+    }
 }
