@@ -39,7 +39,7 @@ object ChannelArchiveCommand: CommandBase {
 
     override fun execute(command: String, message: Message, args: String) {
         val channel = message.channel
-        val exportType = 0
+        val exportType = args.toIntOrNull() ?: 0
         val format = getFormat(exportType)
 
         if (channel !is TextChannel) {
