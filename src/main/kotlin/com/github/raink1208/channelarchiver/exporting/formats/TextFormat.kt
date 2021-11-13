@@ -27,8 +27,6 @@ class TextFormat: ExportFormat {
                 }
             }
         }
-
-
         return file
     }
 
