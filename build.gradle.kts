@@ -16,6 +16,7 @@ dependencies {
 
     implementation("net.dv8tion:JDA:4.3.0_277")
     implementation("org.yaml:snakeyaml:1.12")
+    implementation("com.google.code.gson:gson:2.8.5")
 
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
