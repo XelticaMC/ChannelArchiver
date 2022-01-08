@@ -57,13 +57,6 @@ object ChannelArchiveCommand: CommandBase {
         ChannelExporter(channel, format).export()
     }
 
-    fun execute(message: Message) {
-        val channel = message.channel
-        val format = getFormat(0)
-        if (channel is TextChannel && format is ExportFormat)
-            ChannelExporter(channel, format).export()
-    }
-
     private fun getFormat(exportType: Int): ExportFormat? {
         return when (exportType) {
             ChannelExporter.TXT -> TextFormat()
