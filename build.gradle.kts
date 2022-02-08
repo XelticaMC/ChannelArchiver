@@ -21,7 +21,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
 
-    implementation("net.dv8tion:JDA:5.0.0-alpha.3")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.5")
     implementation("org.yaml:snakeyaml:1.29")
     implementation("com.google.code.gson:gson:2.8.9")
 
