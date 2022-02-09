@@ -5,19 +5,21 @@ import com.github.raink1208.channelarchiver.exporting.ChannelExporter
 import com.github.raink1208.channelarchiver.exporting.formats.TextFormat
 import com.github.raink1208.channelarchiver.exporting.formats.ExportFormat
 import com.github.raink1208.channelarchiver.exporting.formats.JSONFormat
+import com.github.raink1208.channelarchiver.exporting.formats.MDFormat
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
+import net.dv8tion.jda.api.interactions.commands.build.Commands
 import net.dv8tion.jda.api.interactions.commands.build.OptionData
 
 object ChannelArchiveCommand: CommandBase {
-    override val commandData: CommandData = CommandData("archive", "チャンネルを外部ファイルに出力します (export type = [0 = txt, 1 = json])")
+    override val commandData: CommandData = Commands.slash("archive", "チャンネルを外部ファイルに出力します (export type = [0 = txt, 1 = json])")
         .addOption(OptionType.CHANNEL, "channel", "アーカイブするチャンネル", false)
-        .addOptions(OptionData(OptionType.INTEGER, "export_type", "出力タイプ(default = 0[txt])", false).addChoice("TXT", 0).addChoice("JSON", 1))
+        .addOptions(OptionData(OptionType.INTEGER, "export_type", "出力タイプ(default = 0[txt])", false).addChoice("TXT", 0).addChoice("JSON", 1).addChoice("MD",2))
 
-    override fun execute(event: SlashCommandEvent) {
+    override fun execute(event: SlashCommandInteractionEvent) {
         val channel = event.getOption("channel")?.asGuildChannel ?: event.textChannel
         val exportType = event.getOption("export_type")?.asLong?.toInt() ?: 0
         val format = getFormat(exportType)
@@ -61,6 +63,7 @@ object ChannelArchiveCommand: CommandBase {
         return when (exportType) {
             ChannelExporter.TXT -> TextFormat()
             ChannelExporter.JSON -> JSONFormat()
+            ChannelExporter.MD -> MDFormat()
             else -> null
         }
     }

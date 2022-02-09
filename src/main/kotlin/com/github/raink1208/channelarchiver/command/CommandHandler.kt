@@ -1,7 +1,7 @@
 package com.github.raink1208.channelarchiver.command
 
 import net.dv8tion.jda.api.entities.Message
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import org.slf4j.LoggerFactory
 import java.lang.Exception
 
@@ -24,7 +24,7 @@ class CommandHandler {
         return commandList.find { it.commandData.name == command }
     }
 
-    fun findAndExecute(command: SlashCommandEvent) {
+    fun findAndExecute(command: SlashCommandInteractionEvent) {
         val cmd = findCommand(command.name)
 
         if (cmd == null) {
