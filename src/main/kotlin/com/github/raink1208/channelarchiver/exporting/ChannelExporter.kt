@@ -9,6 +9,7 @@ class ChannelExporter(private val channel: TextChannel, private val format: Expo
     companion object {
         const val TXT = 0
         const val JSON = 1
+        const val MD = 2
     }
 
     fun export() {
